@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Training Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #334155;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .header h1 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        
+        .welcome-text {
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            text-decoration: none;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            text-decoration: none;
+            color: #1e293b;
+            background: #f8fafc;
+        }
+        
+        .nav-button .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #3b82f6;
+        }
+        
+        .nav-button .text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+        
+        .nav-button .description {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .logout-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 15px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        
+        <div class="header">
+            <h1>Training Management Dashboard</h1>
+            <p class="welcome-text">Welcome, {{ session.user_name }}!</p>
+        </div>
+        
+        <div class="nav-grid">
+            <a href="{{ url_for('user_profile') }}" class="nav-button">
+                <span class="icon">👤</span>
+                <span class="text">User Profile</span>
+                <span class="description">View your complete profile and job details</span>
+            </a>
+            
+            {% if session.user_role and session.user_role.lower() not in ['employee', ''] %}
+            <a href="{{ url_for('team_management') }}" class="nav-button">
+                <span class="icon">👥</span>
+                <span class="text">Team Management</span>
+                <span class="description">Manage and view your team members' training data</span>
+            </a>
+            {% endif %}
+            
+            <a href="{{ url_for('view_missing_trainings') }}" class="nav-button">
+                <span class="icon">⚠️</span>
+                <span class="text">Missing Trainings</span>
+                <span class="description">View trainings you still need to complete</span>
+            </a>
+            
+            <a href="{{ url_for('view_acquired_trainings') }}" class="nav-button">
+                <span class="icon">✅</span>
+                <span class="text">Completed Trainings</span>
+                <span class="description">View trainings you have successfully completed</span>
+            </a>
+            
+            <a href="{{ url_for('view_job_trainings') }}" class="nav-button">
+                <span class="icon">💼</span>
+                <span class="text">Job Required Trainings</span>
+                <span class="description">View trainings required for your job position</span>
+            </a>
+            
+            <a href="{{ url_for('view_all_trainings') }}" class="nav-button">
+                <span class="icon">📚</span>
+                <span class="text">All Trainings</span>
+                <span class="description">Browse all available training programs</span>
+            </a>
+            
+            <a href="{{ url_for('view_job_gtask') }}" class="nav-button">
+                <span class="icon">📋</span>
+                <span class="text">Job Tasks</span>
+                <span class="description">View general and technical tasks for your role</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

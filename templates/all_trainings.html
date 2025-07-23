@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="table-container">
+    <h2>All Available Trainings</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Training Code</th>
+                <th>Training Description</th>
+                <th>Duration (Hours)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for training in trainings %}
+            <tr>
+                <td>{{ training.TrgCode }}</td>
+                <td>{{ training.TrgDesc }}</td>
+                <td>{{ training.Duration }}</td>
+            </tr>
+            {% endfor %}
+            {% if not trainings %}
+            <tr>
+                <td colspan="3">No trainings found.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

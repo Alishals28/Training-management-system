@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Analysis Card (JAC)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='jac_card.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: #fff;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+        .jac-container {
+            width: 900px;
+            margin: 30px auto;
+            border: 2px solid #000;
+            background: #fff;
+            box-shadow: 0 0 10px #ccc;
+            padding: 30px 40px 40px 40px;
+        }
+        .jac-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .jac-logo {
+            width: 120px;
+            height: 80px;
+            background: #eee;
+            border: 1px solid #aaa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #888;
+        }
+        .jac-title {
+            flex: 1;
+            text-align: center;
+            font-size: 2.1em;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .jac-section {
+            margin-bottom: 18px;
+        }
+        .jac-section-title {
+            background: #e0e0e0;
+            border: 1px solid #000;
+            font-weight: bold;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .jac-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        .jac-table td, .jac-table th {
+            border: 1px solid #000;
+            padding: 7px 10px;
+            font-size: 1em;
+        }
+        .jac-table th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        .jac-label {
+            font-weight: bold;
+            width: 180px;
+        }
+        .jac-signatures {
+            margin-top: 30px;
+        }
+        .jac-sign-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+        .jac-sign-block {
+            width: 30%;
+            border: 1px solid #000;
+            padding: 12px 10px 30px 10px;
+            min-height: 90px;
+            text-align: center;
+        }
+        .jac-sign-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .jac-date-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .jac-date-block {
+            width: 30%;
+            text-align: center;
+        }
+        .jac-footer {
+            text-align: center;
+            color: #888;
+            font-size: 0.95em;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="jac-container">
+    <div class="jac-header">
+        <div class="jac-logo">LOGO</div>
+        <div class="jac-title">JOB ANALYSIS CARD (JAC)</div>
+        <div class="jac-logo" style="opacity:0">LOGO</div>
+    </div>
+
+    <!-- SECTION 1: EMPLOYEE INFORMATION -->
+    <div class="jac-section">
+        <div class="jac-section-title">EMPLOYEE INFORMATION</div>
+        <table class="jac-table">
+            <tr>
+                <td class="jac-label">Name:</td>
+                <td>{{ personal_info.EMPNAME or 'N/A' }}</td>
+                <td class="jac-label">PIN:</td>
+                <td>{{ personal_info.PIN or 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="jac-label">PNO:</td>
+                <td>{{ personal_info.PNO or 'N/A' }}</td>
+                <td class="jac-label">Project:</td>
+                <td>{{ personal_info.Project or 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="jac-label">Designation:</td>
+                <td>{{ personal_info.DESIG or 'N/A' }}</td>
+                <td class="jac-label">Job Position:</td>
+                <td>{{ personal_info.JOBPOSITION or 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="jac-label">Division:</td>
+                <td>{{ personal_info.DIVISION or 'N/A' }}</td>
+                <td class="jac-label">Section:</td>
+                <td>{{ personal_info.SECTION or 'N/A' }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION 2: QUALIFICATIONS -->
+    <div class="jac-section">
+        <div class="jac-section-title">QUALIFICATIONS</div>
+        <table class="jac-table">
+            <tr>
+                <td class="jac-label">Education Achieved:</td>
+                <td>{{ personal_info.EDUCATION or 'N/A' }}</td>
+                <td class="jac-label">Education Required:</td>
+                <td>{{ job_details.JobPos_EduReq or 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="jac-label">Experience Achieved:</td>
+                <td>{{ personal_info.EXPERIENCE or 'N/A' }} years</td>
+                <td class="jac-label">Experience Required:</td>
+                <td>{{ job_details.JobPos_ExpReq or 'N/A' }} years</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION 3: JOB PURPOSE -->
+    <div class="jac-section">
+        <div class="jac-section-title">JOB PURPOSE</div>
+        <div style="border:1px solid #000; padding:12px; min-height:60px;">{{ job_details.JobPos_Purpose or 'N/A' }}</div>
+    </div>
+
+    <!-- SECTION 4: TOOLS, SKILLS & SOFTWARE -->
+    <div class="jac-section">
+        <div class="jac-section-title">JOB RELATED TOOLS, SKILLS & SOFTWARE</div>
+        <div style="border:1px solid #000; padding:12px; min-height:60px;">{{ job_details.JobPos_Tools_Software or 'N/A' }}</div>
+    </div>
+
+    <!-- SECTION 5: JOB DUTY/FUNCTIONAL AREAS -->
+    <div class="jac-section">
+        <div class="jac-section-title">JOB DUTY/FUNCTIONAL AREAS</div>
+        <div style="border:1px solid #000; padding:12px; min-height:60px;">
+            {% if job_areas %}
+                <ul style="margin:0; padding-left:18px;">
+                {% for area in job_areas %}
+                    <li>{{ area.JobArea }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}N/A{% endif %}
+        </div>
+    </div>
+
+    <!-- SECTION 6: JOB GENERAL TASKS -->
+    <div class="jac-section">
+        <div class="jac-section-title">JOB GENERAL TASKS</div>
+        <div style="border:1px solid #000; padding:12px; min-height:60px;">
+            {% if general_tasks %}
+                <ul style="margin:0; padding-left:18px;">
+                {% for task in general_tasks %}
+                    <li>{{ task.task_description or task.JobGTask }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}N/A{% endif %}
+        </div>
+    </div>
+
+    <!-- SECTION 7: JOB TECHNICAL TASKS -->
+    <div class="jac-section">
+        <div class="jac-section-title">JOB TECHNICAL TASKS</div>
+        <div style="border:1px solid #000; padding:12px; min-height:60px;">
+            {% if technical_tasks %}
+                <ul style="margin:0; padding-left:18px;">
+                {% for task in technical_tasks %}
+                    <li>{{ task.task_description or task.JobTTask }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}N/A{% endif %}
+        </div>
+    </div>
+
+    <!-- SECTION 8: TRAINING ANALYSIS -->
+    <div class="jac-section">
+        <div class="jac-section-title">TRAINING ANALYSIS</div>
+        <table class="jac-table">
+            <tr>
+                <th>Trainings Required</th>
+                <th>Trainings Received</th>
+            </tr>
+            <tr>
+                <td>
+                    {% if required_trainings %}
+                        <ul style="margin:0; padding-left:18px;">
+                        {% for t in required_trainings %}
+                            <li>{{ t.TrgDesc or t.TrgDesc }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}N/A{% endif %}
+                </td>
+                <td>
+                    {% if acquired_trainings %}
+                        <ul style="margin:0; padding-left:18px;">
+                        {% for t in acquired_trainings %}
+                            <li>{{ t.Acquired_Training_Desc or t.Training_Desc }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}N/A{% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION 9: TRAINING GAPS -->
+    <div class="jac-section">
+        <div class="jac-section-title" style="background:#f8d7da;">TRAINING GAPS</div>
+        <div style="border:1px solid #000; padding:12px; min-height:60px;">
+            {% if missing_trainings %}
+                <ul style="margin:0; padding-left:18px;">
+                {% for t in missing_trainings %}
+                    <li>{{ t.Missing_Training_Desc or t.Training_Desc }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}No training gaps identified{% endif %}
+        </div>
+    </div>
+
+    <!-- SIGNATURE SECTION -->
+    <div class="jac-signatures">
+        <div class="jac-sign-row">
+            <div class="jac-sign-block">
+                <span class="jac-sign-label">PREPARED BY</span>
+                <br><br>Name: ____________________<br><br>
+                Designation: ______________<br><br>
+                Signature: _______________<br><br>
+            </div>
+            <div class="jac-sign-block">
+                <span class="jac-sign-label">REVIEWED BY</span>
+                <br><br>Name: ____________________<br><br>
+                Designation: ______________<br><br>
+                Signature: _______________<br><br>
+            </div>
+            <div class="jac-sign-block">
+                <span class="jac-sign-label">APPROVED BY</span>
+                <br><br>Name: ____________________<br><br>
+                Designation: ______________<br><br>
+                Signature: _______________<br><br>
+            </div>
+        </div>
+        <div class="jac-date-row">
+            <div class="jac-date-block">Date: ___________________</div>
+            <div class="jac-date-block">Date: ___________________</div>
+            <div class="jac-date-block">Date: ___________________</div>
+        </div>
+    </div>
+
+    <div class="jac-footer">
+        Generated on: {{ generation_time }}
+    </div>
+</div>
+</body>
+</html>

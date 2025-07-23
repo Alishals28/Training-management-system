@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="table-container">
+    {% if is_viewing_other %}
+        <h2>Missing Trainings - {{ employee_name }}</h2>
+        <div style="margin-bottom: 15px; padding: 10px; background-color: #e3f2fd; border-left: 4px solid #2196f3; border-radius: 4px;">
+            <strong>Viewing training data for:</strong> {{ employee_name }}
+        </div>
+    {% else %}
+        <h2>Missing Trainings</h2>
+    {% endif %}
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Job Position</th>
+                <th>Missing Training</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for training in trainings %}
+            <tr>
+                <td>{{ training.EMPNAME }}</td>
+                <td>{{ training.JobPosition }}</td>
+                <td>{{ training.Missing_Training }}</td>
+            </tr>
+            {% endfor %}
+            {% if not trainings %}
+            <tr>
+                <td colspan="3">No missing trainings found{% if is_viewing_other %} for {{ employee_name }}{% endif %}.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

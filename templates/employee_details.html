@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details - Training Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #bfd9ff 0%, #bfd9ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #334155;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+        
+        .header-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .print-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .header h1 {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .personal-info {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .personal-info h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #1e293b;
+            min-width: 120px;
+        }
+        
+        .info-value {
+            color: #475569;
+        }
+        
+        .details-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .detail-box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .detail-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        
+        .detail-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 18px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .detail-content {
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .detail-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .detail-content::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+        
+        .detail-content::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        
+        .detail-content::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        .list-item {
+            background: #f8fafc;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        
+        .list-item:hover {
+            background: #f1f5f9;
+            border-left-color: #1d4ed8;
+        }
+        
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .no-data {
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+            padding: 20px;
+        }
+        
+        .task-desc {
+            font-weight: 500;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+        
+        .training-item {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        
+        .training-detail {
+            margin-bottom: 5px;
+            color: #475569;
+        }
+        
+        .training-detail strong {
+            color: #1e293b;
+        }
+        
+        @media (max-width: 768px) {
+            .header-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .details-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-buttons">
+                <a href="javascript:history.back()" class="back-btn">
+                    <span>←</span>
+                    Back
+                </a>
+                <a href="{{ url_for('generate_jac_pdf') }}?pin={{ personal_info.PIN if personal_info else session.user_pin }}" class="print-btn">
+                    <span>📄</span>
+                    Generate JAC PDF
+                </a>
+            </div>
+            <h1>Employee Details</h1>
+        </div>
+        
+        <!-- Personal Information Section -->
+        <div class="personal-info">
+            <h2>Personal Information</h2>
+            {% if personal_info %}
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Name:</span>
+                        <span class="info-value">{{ personal_info.EMPNAME or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">PIN:</span>
+                        <span class="info-value">{{ personal_info.PIN or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">PNO:</span>
+                        <span class="info-value">{{ personal_info.PNO or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Project:</span>
+                        <span class="info-value">{{ personal_info.Project or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Designation:</span>
+                        <span class="info-value">{{ personal_info.DESIG or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Job Position:</span>
+                        <span class="info-value">{{ personal_info.JOBPOSITION or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Division:</span>
+                        <span class="info-value">{{ personal_info.DIVISION or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Section:</span>
+                        <span class="info-value">{{ personal_info.SECTION or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Education:</span>
+                        <span class="info-value">{{ personal_info.EDUCATION or 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Experience:</span>
+                        <span class="info-value">{{ personal_info.EXPERIENCE or 'N/A' }} years</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Role:</span>
+                        <span class="info-value">{{ personal_info.Role or 'Employee' }}</span>
+                    </div>
+                </div>
+            {% else %}
+                <div class="no-data">No personal information available</div>
+            {% endif %}
+        </div>
+        
+        <!-- Other Details in Grid -->
+        <div class="details-container">
+            <!-- Job Area -->
+            <div class="detail-box">
+                <div class="detail-header">Job Area</div>
+                <div class="detail-content">
+                    {% if job_areas %}
+                        {% for area in job_areas %}
+                            <div class="list-item">{{ area.JobArea }}</div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-data">No job area information available</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Job General Tasks -->
+            <div class="detail-box">
+                <div class="detail-header">Job General Tasks</div>
+                <div class="detail-content">
+                    {% if general_tasks %}
+                        {% for task in general_tasks %}
+                            <div class="list-item">
+                                <div class="task-desc">{{ task.task_description }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-data">No general tasks available</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Job Technical Tasks -->
+            <div class="detail-box">
+                <div class="detail-header">Job Technical Tasks</div>
+                <div class="detail-content">
+                    {% if technical_tasks %}
+                        {% for task in technical_tasks %}
+                            <div class="list-item">
+                                <div class="task-desc">{{ task.task_description }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-data">No technical tasks available</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Required Trainings -->
+            <div class="detail-box">
+                <div class="detail-header">Required Trainings</div>
+                <div class="detail-content">
+                    {% if required_trainings %}
+                        {% for training in required_trainings %}
+                            <div class="list-item training-item">
+                                <div class="training-detail">{{ training.TrgDesc }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-data">No required trainings</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Acquired Trainings -->
+            <div class="detail-box">
+                <div class="detail-header">Acquired Trainings</div>
+                <div class="detail-content">
+                    {% if acquired_trainings %}
+                        {% for training in acquired_trainings %}
+                            <div class="list-item training-item">
+                                <div class="training-detail">{{ training.Acquired_Training_Desc }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-data">No acquired trainings</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Training Gap -->
+            <div class="detail-box">
+                <div class="detail-header">Training Gap (Missing Trainings)</div>
+                <div class="detail-content">
+                    {% if missing_trainings %}
+                        {% for training in missing_trainings %}
+                            <div class="list-item training-item">
+                                <div class="training-detail">{{ training.Missing_Training_Desc }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-data">No missing trainings - You're all caught up!</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
